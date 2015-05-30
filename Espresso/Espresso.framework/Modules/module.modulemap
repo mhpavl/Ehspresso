@@ -1,0 +1,10 @@
+framework module Espresso {
+  umbrella header "Espresso.h"
+
+  export *
+  module * { export * }
+}
+
+module Espresso.Swift {
+    header "Espresso-Swift.h"
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Espresso OS X.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Espresso iOS Universal.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>Espresso iOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>4D6342271AEC32E40073DE53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4D6342321AEC32E40073DE53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4D6342481AEC33A00073DE53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4D6342521AEC33A00073DE53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4D6342DE1AEDEF770073DE53</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
