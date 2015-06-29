@@ -43,25 +43,25 @@ enum WatchEvent: Int, EventProtocol {
 
 let transitions = [
     StateTransition(fromState: WatchState.Inactive, event: WatchEvent.Active, toState: WatchState.Active, action: {
-        println("Watch Active")
+        print("Watch Active")
     }),
     StateTransition(fromState: WatchState.Active, event: WatchEvent.Wait, toState: WatchState.Waiting, action: {
-        println("Watch Wait")
+        print("Watch Wait")
     }),
     StateTransition(fromState: WatchState.Waiting, event: WatchEvent.Do, toState: WatchState.Doing, action: {
-        println("Watch Do")
+        print("Watch Do")
     }),
     
     /* Comment out for Reachability property failure */
     StateTransition(fromState: WatchState.Doing, event: WatchEvent.ShowFinished, toState: WatchState.Finished, action: {
-        println("Watch Finished")
+        print("Watch Finished")
     }),
     
     /** Comment out for Liveness property failure
         Add WatchState.Finished to acceptingStates to accept sink state
     */
     StateTransition(fromState: WatchState.Finished, event: WatchEvent.Reset, toState: WatchState.Waiting, action: {
-        println("Watch Wait 2")
+        print("Watch Wait 2")
     }),
     
     /** Uncomment for Deterministic property failure

@@ -8,11 +8,11 @@
 
 import Foundation
 
-public protocol StateProtocol: Equatable, Hashable , Printable {
+public protocol StateProtocol: Equatable, Hashable , CustomStringConvertible {
     static var allStates: [Self] { get }
 }
 
-public protocol EventProtocol: Equatable, Hashable , Printable{
+public protocol EventProtocol: Equatable, Hashable , CustomStringConvertible{
     static var allEvents: [Self] { get }
     var notificationName: String { get }
 }
@@ -41,7 +41,7 @@ final public class Machine<S: StateProtocol, E: EventProtocol> {
     let states: [S]
     private(set) var state: S {
         didSet {
-            debugPrintln("Espresso state changed: \(oldValue.description) -> \(state.description)")
+            debugPrint("Espresso state changed: \(oldValue.description) -> \(state.description)")
         }
     }
     let acceptingStates: [S]
@@ -71,7 +71,7 @@ final public class Machine<S: StateProtocol, E: EventProtocol> {
     }
     
     deinit {
-        for event in events {
+        for _ in events {
             for observer in eventObservers {
                 NSNotificationCenter.defaultCenter().removeObserver(observer)
             }
@@ -91,7 +91,7 @@ final public class Machine<S: StateProtocol, E: EventProtocol> {
         let reachableStates = transitions.reduce(Set(arrayLiteral: initialState)) { $0.union(Set(arrayLiteral: $1.toState)) }
         let unreachableStates = Set(states).subtract(reachableStates)
         if !unreachableStates.isEmpty {
-            debugPrintln("Unreachable States: " + join(",", Array(unreachableStates).map({ $0.description })))
+            debugPrint("Unreachable States: " + ",".join(Array(arrayLiteral: unreachableStates).map({ $0.description })))
         }
         return unreachableStates.isEmpty
     }
@@ -102,7 +102,7 @@ final public class Machine<S: StateProtocol, E: EventProtocol> {
         }
         let sinkStates = Set(states).subtract(liveStates).subtract(acceptingStates)
         if !sinkStates.isEmpty {
-            debugPrintln("Sink States: " + join(",", Array(sinkStates).map({ $0.description })))
+            debugPrint("Sink States: " + ",".join(Array(arrayLiteral: sinkStates).map({ $0.description })))
         }
         return sinkStates.isEmpty
     }
@@ -111,7 +111,7 @@ final public class Machine<S: StateProtocol, E: EventProtocol> {
         for transition in transitions {
             let t = transitions.filter({$0 == transition})
             if t.count > 1 {
-                debugPrintln("Non-unique transition: \(transition)")
+                debugPrint("Non-unique transition: \(transition)")
                 return false
             }
         }

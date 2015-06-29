@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/Espresso-Swift.h</key>
 		<data>
-		qpNwbc70WqEhHzgL5eH74Svcd5o=
+		89uqbUUirbqMqpgokXU6oalAexQ=
 		</data>
 		<key>Headers/Espresso.h</key>
 		<data>
@@ -14,23 +14,23 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		qByTqBdSRyE4fBv1219iEycyzIY=
+		GvHFW2w5KYW/dWh2Uta1qyB6K9s=
 		</data>
 		<key>Modules/Espresso.swiftmodule/arm.swiftdoc</key>
 		<data>
-		7Y4PO9U0oB1fjFiPwi8MCy0E4Rk=
+		GbkW1XULXMI69fgHMBrJNLaZJSQ=
 		</data>
 		<key>Modules/Espresso.swiftmodule/arm.swiftmodule</key>
 		<data>
-		woysd5zYr9Bu9FyeBNT4PscqFuk=
+		LizUDp7cEmpPhzblA3wjPupXRfw=
 		</data>
 		<key>Modules/Espresso.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		5n000Kn5LPcyoG29o9/G4lvzmm0=
+		6pz7VI1CGXEKRAkXy0357MIcduI=
 		</data>
 		<key>Modules/Espresso.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		zqx3X1H3h/H4yCmV9cg4WLRCjJ0=
+		Ux9vNtaZjxbGWvH2Oog6PRNbM14=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -41,7 +41,7 @@
 	<dict>
 		<key>Headers/Espresso-Swift.h</key>
 		<data>
-		qpNwbc70WqEhHzgL5eH74Svcd5o=
+		89uqbUUirbqMqpgokXU6oalAexQ=
 		</data>
 		<key>Headers/Espresso.h</key>
 		<data>
@@ -49,19 +49,19 @@
 		</data>
 		<key>Modules/Espresso.swiftmodule/arm.swiftdoc</key>
 		<data>
-		7Y4PO9U0oB1fjFiPwi8MCy0E4Rk=
+		GbkW1XULXMI69fgHMBrJNLaZJSQ=
 		</data>
 		<key>Modules/Espresso.swiftmodule/arm.swiftmodule</key>
 		<data>
-		woysd5zYr9Bu9FyeBNT4PscqFuk=
+		LizUDp7cEmpPhzblA3wjPupXRfw=
 		</data>
 		<key>Modules/Espresso.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		5n000Kn5LPcyoG29o9/G4lvzmm0=
+		6pz7VI1CGXEKRAkXy0357MIcduI=
 		</data>
 		<key>Modules/Espresso.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		zqx3X1H3h/H4yCmV9cg4WLRCjJ0=
+		Ux9vNtaZjxbGWvH2Oog6PRNbM14=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
