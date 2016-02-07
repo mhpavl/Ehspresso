@@ -66,12 +66,12 @@ let transitions = [
     
     /** Uncomment for Deterministic property failure
     StateTransition(fromState: WatchState.Finished, event: WatchEvent.Reset, toState: WatchState.Waiting, action: {
-        println("Watch Finished 2")
+        print("Watch Finished 2")
     }),
     */
 ]
 
-let fsm = Espresso.Machine(initialState: WatchState.Inactive, transitions: transitions, acceptingStates:[])
+let fsm = try Espresso.Machine(initialState: WatchState.Inactive, transitions: transitions, acceptingStates:[])
 
 Espresso.postEvent(WatchEvent.Active)
 Espresso.postEvent(WatchEvent.Wait)

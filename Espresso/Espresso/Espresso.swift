@@ -12,18 +12,18 @@ public protocol StateProtocol: Equatable, Hashable , CustomStringConvertible {
     static var allStates: [Self] { get }
 }
 
-public protocol EventProtocol: Equatable, Hashable , CustomStringConvertible{
+public protocol EventProtocol: Equatable, Hashable , CustomStringConvertible {
     static var allEvents: [Self] { get }
     var notificationName: String { get }
 }
 
-public struct StateTransition<S: StateProtocol, E: EventProtocol> {
-    public typealias Action = () -> ()
+public struct StateTransition<S: StateProtocol, E: EventProtocol>: Equatable {
+    public typealias Action = () -> Void
     
-    let fromState: S
-    let event: E
-    let toState: S
-    let action: Action?
+    let fromState: S        // Source State
+    let event: E            // Event
+    let toState: S          // Target State
+    let action: Action?     // Runs on an arbitrary queue, bounce UI to the main thread
     
     public init(fromState: S, event: E, toState: S, action: Action?) {
         self.fromState = fromState
@@ -33,8 +33,12 @@ public struct StateTransition<S: StateProtocol, E: EventProtocol> {
     }
 }
 
-func ==<S, T>(lhs: StateTransition<S, T>, rhs: StateTransition<S, T>) -> Bool {
+public func ==<S, T>(lhs: StateTransition<S, T>, rhs: StateTransition<S, T>) -> Bool {
     return (lhs.fromState == rhs.fromState && lhs.event == rhs.event && lhs.toState == rhs.toState)
+}
+
+enum MachineValidationError: ErrorType {
+    case Reachability, Liveness, Determinisic
 }
 
 final public class Machine<S: StateProtocol, E: EventProtocol> {
@@ -52,7 +56,7 @@ final public class Machine<S: StateProtocol, E: EventProtocol> {
     
     private let queue: dispatch_queue_t = dispatch_queue_create("com.flixel.fsm.queue", DISPATCH_QUEUE_SERIAL);
     
-    public init(initialState: S, transitions: [StateTransition<S, E>], acceptingStates: [S]) {
+    public init(initialState: S, transitions: [StateTransition<S, E>], acceptingStates: [S]) throws {
         self.states = S.allStates
         self.state = initialState
         self.acceptingStates = acceptingStates
@@ -61,13 +65,14 @@ final public class Machine<S: StateProtocol, E: EventProtocol> {
         self.eventObservers = [AnyObject]()
         
         for event in events {
-            eventObservers.append(NSNotificationCenter.defaultCenter().addObserverForName(event.notificationName, object: nil, queue: nil, usingBlock: { [unowned self] (n) -> Void in
-                self.handleEvent(event)
+            eventObservers.append(NSNotificationCenter.defaultCenter().addObserverForName(event.notificationName, object: nil, queue: nil, usingBlock: { [weak self] notification in
+                    self?.handleEvent(event)
                 }))
         }
-        assert(validateStatesReachable(initialState), "Espresso Machine failed reachability property")
-        assert(validateLiveness(self.acceptingStates), "Espresso Machine failed liveness property")
-        assert(validateDeterministic(), "Espresso Machine failed deterministic property")
+        
+        try validateStatesReachable(initialState)   // "Espresso Machine failed reachability property"
+        try validateLiveness(self.acceptingStates)  // "Espresso Machine failed liveness property")
+        try validateDeterministic()                 // "Espresso Machine failed deterministic property")
     }
     
     deinit {
@@ -80,42 +85,41 @@ final public class Machine<S: StateProtocol, E: EventProtocol> {
     
     func handleEvent(event:E) {
         dispatch_sync(self.queue, { () -> Void in
-            if let transition = self.transitions.filter({$0.fromState == self.state && $0.event == event}).first {
+            if let transition = self.transitions.filter({ $0.fromState == self.state && $0.event == event }).first {
                 self.state = transition.toState
                 transition.action?()
             }
         })
     }
     
-    func validateStatesReachable(initialState: S) -> Bool {
+    func validateStatesReachable(initialState: S) throws {
         let reachableStates = transitions.reduce(Set(arrayLiteral: initialState)) { $0.union(Set(arrayLiteral: $1.toState)) }
         let unreachableStates = Set(states).subtract(reachableStates)
         if !unreachableStates.isEmpty {
-            debugPrint("Unreachable States: " + ",".join(Array(arrayLiteral: unreachableStates).map({ $0.description })))
+            debugPrint("Unreachable States: " + Array(arrayLiteral: unreachableStates).map({ $0.description }).joinWithSeparator(","))
+            throw MachineValidationError.Reachability
         }
-        return unreachableStates.isEmpty
     }
     
-    func validateLiveness(acceptingStates: [S]) -> Bool {
+    func validateLiveness(acceptingStates: [S]) throws {
         let liveStates = transitions.reduce(Set()) {
             $1.fromState != $1.toState ? $0.union(Set(arrayLiteral: $1.fromState)) : Set()
         }
         let sinkStates = Set(states).subtract(liveStates).subtract(acceptingStates)
         if !sinkStates.isEmpty {
-            debugPrint("Sink States: " + ",".join(Array(arrayLiteral: sinkStates).map({ $0.description })))
+            debugPrint("Sink States: " + Array(arrayLiteral: sinkStates).map({ $0.description }).joinWithSeparator(","))
+            throw MachineValidationError.Liveness
         }
-        return sinkStates.isEmpty
     }
     
-    func validateDeterministic() -> Bool {
+    func validateDeterministic() throws {
         for transition in transitions {
             let t = transitions.filter({$0 == transition})
             if t.count > 1 {
                 debugPrint("Non-unique transition: \(transition)")
-                return false
+                throw MachineValidationError.Determinisic
             }
         }
-        return true
     }
 }
 
