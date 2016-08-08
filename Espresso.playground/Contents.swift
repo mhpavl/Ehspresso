@@ -5,76 +5,91 @@ import Espresso
 
 
 enum WatchState: Int, StateProtocol {
-    case Inactive, Active, Waiting, Doing, Finished
-    static var allStates: [WatchState] {
-        return [Inactive, Active, Waiting, Doing, Finished]
+    case inactive, active, waiting, doing, finished
+    static var allStates: Set<WatchState> {
+        return [inactive, active, waiting, doing, finished]
     }
     var description: String { return String(self.rawValue) }
 }
 
 enum WatchEvent: Int, EventProtocol {
-    case Inactive, Active, Wait, Do, ShowDoing, ShowFinished, Reset
+    case inactive, active, wait, start, showDoing, finish, reset
     
-    static var allEvents: [WatchEvent] {
-        return [Inactive, Active, Wait, Do, ShowDoing, ShowFinished, Reset]
+    static var allEvents: Set<WatchEvent> {
+        return [inactive, active, wait, start, showDoing, finish, reset]
     }
     
-    var notificationName: String {
+    var notificationName: Notification.Name {
         switch self {
-        case .Inactive:
-            return NSExtensionHostWillResignActiveNotification
-        case .Active:
-            return NSExtensionHostDidBecomeActiveNotification
-        case .Wait:
-            return "WatchWaitNotification"
-        case .Do:
-            return "WatchDoNotification"
-        case .ShowDoing:
-            return "WatchShowDoingNotification"
-        case .ShowFinished:
-            return "WatchShowFinishedNotification"
-        case .Reset:
-            return "WatchResetNotification"
+        case .inactive:
+            return .NSExtensionHostWillResignActive
+        case .active:
+            return .NSExtensionHostDidBecomeActive
+        case .wait:
+            return .WatchWait
+        case .start:
+            return .WatchDo
+        case .showDoing:
+            return .WatchShowDoing
+        case .finish:
+            return .WatchFinished
+        case .reset:
+            return .WatchReset
         }
     }
     
     var description: String { return String(self.rawValue) }
 }
 
-let transitions = [
-    StateTransition(fromState: WatchState.Inactive, event: WatchEvent.Active, toState: WatchState.Active, action: {
+extension Notification.Name {
+    static let WatchWait = Notification.Name("WatchWaitNotification")
+    static let WatchDo = Notification.Name("WatchDoNotification")
+    static let WatchShowDoing = Notification.Name("WatchShowDoingNotification")
+    static let WatchFinished = Notification.Name("WatchFinishedNotification")
+    static let WatchReset = Notification.Name("WatchResetNotification")
+}
+
+
+let transitions: [StateTransition<WatchState, WatchEvent>] = [
+    StateTransition(fromState: .inactive, event: .active, toState: .active) {
         print("Watch Active")
-    }),
-    StateTransition(fromState: WatchState.Active, event: WatchEvent.Wait, toState: WatchState.Waiting, action: {
+    },
+    StateTransition(fromState: .active, event: .wait, toState: .waiting) {
         print("Watch Wait")
-    }),
-    StateTransition(fromState: WatchState.Waiting, event: WatchEvent.Do, toState: WatchState.Doing, action: {
+    },
+    StateTransition(fromState: .waiting, event: .start, toState: .doing) {
         print("Watch Do")
-    }),
+    },
     
-    /* Comment out for Reachability property failure */
-    StateTransition(fromState: WatchState.Doing, event: WatchEvent.ShowFinished, toState: WatchState.Finished, action: {
+    /** 
+     Comment out for Reachability property failure 
+     */
+    StateTransition(fromState: .doing, event: .finish, toState: .finished) {
         print("Watch Finished")
-    }),
+    },
     
-    /** Comment out for Liveness property failure
-        Add WatchState.Finished to acceptingStates to accept sink state
-    */
-    StateTransition(fromState: WatchState.Finished, event: WatchEvent.Reset, toState: WatchState.Waiting, action: {
+    /** 
+     Comment out for Liveness property failure, add WatchState.finished to acceptingStates to accept sink state 
+     */
+    StateTransition(fromState: .finished, event: .reset, toState: .waiting) {
         print("Watch Wait 2")
-    }),
+    },
+ 
     
-    /** Uncomment for Deterministic property failure
-    StateTransition(fromState: WatchState.Finished, event: WatchEvent.Reset, toState: WatchState.Waiting, action: {
+    /** 
+     Uncomment for Deterministic property failure
+    StateTransition(fromState: .finished, event: .reset, toState: .waiting) {
         print("Watch Finished 2")
-    }),
-    */
+    },
+     */
 ]
 
-let fsm = try Espresso.Machine(initialState: WatchState.Inactive, transitions: transitions, acceptingStates:[])
+let fsm = try Espresso.Machine(initialState: .inactive, transitions: transitions, acceptingStates:[])
 
-Espresso.postEvent(WatchEvent.Active)
-Espresso.postEvent(WatchEvent.Wait)
-Espresso.postEvent(WatchEvent.Do)
-Espresso.postEvent(WatchEvent.ShowFinished)
+
+Espresso.postEvent(WatchEvent.active)
+Espresso.postEvent(WatchEvent.wait)
+Espresso.postEvent(WatchEvent.start)
+Espresso.postEvent(WatchEvent.finish)
+
 
