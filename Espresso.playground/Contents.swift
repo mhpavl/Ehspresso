@@ -3,16 +3,16 @@
 import UIKit
 import Espresso
 
+import PlaygroundSupport
 
-enum WatchState: Int, StateProtocol {
+enum WatchState: State {
     case inactive, active, waiting, doing, finished
     static var allStates: Set<WatchState> {
         return [inactive, active, waiting, doing, finished]
     }
-    var description: String { return String(self.rawValue) }
 }
 
-enum WatchEvent: Int, EventProtocol {
+enum WatchEvent: Event {
     case inactive, active, wait, start, showDoing, finish, reset
     
     static var allEvents: Set<WatchEvent> {
@@ -37,8 +37,6 @@ enum WatchEvent: Int, EventProtocol {
             return .WatchReset
         }
     }
-    
-    var description: String { return String(self.rawValue) }
 }
 
 extension Notification.Name {
@@ -59,6 +57,11 @@ let transitions: [StateTransition<WatchState, WatchEvent>] = [
     },
     StateTransition(fromState: .waiting, event: .start, toState: .doing) {
         print("Watch Do")
+        Espresso.postEvent(WatchEvent.showDoing)
+    },
+    
+    StateTransition(fromState: .doing, event: .showDoing, toState: .doing) {
+        print("Doing")
     },
     
     /** 
@@ -71,9 +74,9 @@ let transitions: [StateTransition<WatchState, WatchEvent>] = [
     /** 
      Comment out for Liveness property failure, add WatchState.finished to acceptingStates to accept sink state 
      */
-    StateTransition(fromState: .finished, event: .reset, toState: .waiting) {
-        print("Watch Wait 2")
-    },
+//    StateTransition(fromState: .finished, event: .reset, toState: .waiting) {
+//        print("Watch Wait 2")
+//    },
  
     
     /** 
@@ -84,7 +87,9 @@ let transitions: [StateTransition<WatchState, WatchEvent>] = [
      */
 ]
 
-let fsm = try Espresso.Machine(initialState: .inactive, transitions: transitions, acceptingStates:[])
+PlaygroundPage.current.needsIndefiniteExecution = true
+
+let fsm = try Espresso.Machine(initialState: .inactive, transitions: transitions, acceptingStates:[.finished])
 
 
 Espresso.postEvent(WatchEvent.active)

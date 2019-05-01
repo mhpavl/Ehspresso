@@ -20,8 +20,9 @@ The goal of this project is to explore how to use LLVM and Swift to pragmaticall
 *list Espresso features*
 
 ## Requirements  
-- iOS 7.0+/Mac OS X 10.9+
-- Xcode 6.3
+- iOS 9.3+/Mac OS X 10.10+
+- Xcode 10.1
+- Swift 4.2
 
 ## Usage 
 
