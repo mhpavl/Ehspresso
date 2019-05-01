@@ -8,11 +8,11 @@
 
 import Foundation
 
-public protocol State: Equatable, Hashable {
+public protocol State: Hashable {
     static var allStates: Set<Self> { get }
 }
 
-public protocol Event: Equatable, Hashable {
+public protocol Event: Hashable {
     static var allEvents: Set<Self> { get }
     var notificationName: Notification.Name { get }
 }

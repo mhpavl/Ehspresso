@@ -73,11 +73,11 @@ class FirstViewController: UIViewController {
         
         /**
          Uncomment for Deterministic property failure
-         */
          StateTransition(fromState: .finished, event: .reset, toState: .waiting) {
          print("Watch Finished 2")
          },
- 
+         */
+
     ]
 }
 

@@ -74,9 +74,9 @@ let transitions: [StateTransition<WatchState, WatchEvent>] = [
     /** 
      Comment out for Liveness property failure, add WatchState.finished to acceptingStates to accept sink state 
      */
-    StateTransition(fromState: .finished, event: .reset, toState: .waiting) {
-        print("Watch Wait 2")
-    },
+//    StateTransition(fromState: .finished, event: .reset, toState: .waiting) {
+//        print("Watch Wait 2")
+//    },
  
     
     /** 
