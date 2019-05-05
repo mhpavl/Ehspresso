@@ -8,13 +8,25 @@
 
 import Foundation
 
-public protocol State: Hashable {
+public protocol State: Hashable, CaseIterable {
     static var allStates: Set<Self> { get }
 }
 
-public protocol Event: Hashable {
+public extension State {
+    static var allStates: Set<Self> {
+        return Set(allCases)
+    }
+}
+
+public protocol Event: Hashable, CaseIterable {
     static var allEvents: Set<Self> { get }
     var notificationName: Notification.Name { get }
+}
+
+public extension Event {
+    static var allEvents: Set<Self> {
+        return Set(allCases)
+    }
 }
 
 public struct StateTransition<S: State, E: Event>: Equatable {
@@ -31,11 +43,12 @@ public struct StateTransition<S: State, E: Event>: Equatable {
         self.toState = toState
         self.action = action
     }
+    
+    static public func ==<S, T>(lhs: StateTransition<S, T>, rhs: StateTransition<S, T>) -> Bool {
+        return (lhs.fromState == rhs.fromState && lhs.event == rhs.event && lhs.toState == rhs.toState)
+    }
 }
 
-public func ==<S, T>(lhs: StateTransition<S, T>, rhs: StateTransition<S, T>) -> Bool {
-    return (lhs.fromState == rhs.fromState && lhs.event == rhs.event && lhs.toState == rhs.toState)
-}
 
 public enum MachineValidationError: Error {
     case reachability

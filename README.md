@@ -21,8 +21,8 @@ The goal of this project is to explore how to use LLVM and Swift to pragmaticall
 
 ## Requirements  
 - iOS 9.3+/Mac OS X 10.10+
-- Xcode 10.1
-- Swift 4.2
+- Xcode 10.2
+- Swift 5
 
 ## Usage 
 

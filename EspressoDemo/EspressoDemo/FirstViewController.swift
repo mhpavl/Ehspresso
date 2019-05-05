@@ -85,9 +85,6 @@ class FirstViewController: UIViewController {
 
 enum WatchState: State {
     case inactive, active, waiting, doing, finished
-    static var allStates: Set<WatchState> {
-        return [inactive, active, waiting, doing, finished]
-    }
 }
 
 enum WatchEvent: Event {

@@ -7,17 +7,10 @@ import PlaygroundSupport
 
 enum WatchState: State {
     case inactive, active, waiting, doing, finished
-    static var allStates: Set<WatchState> {
-        return [inactive, active, waiting, doing, finished]
-    }
 }
 
 enum WatchEvent: Event {
     case inactive, active, wait, start, showDoing, finish, reset
-    
-    static var allEvents: Set<WatchEvent> {
-        return [inactive, active, wait, start, showDoing, finish, reset]
-    }
     
     var notificationName: Notification.Name {
         switch self {
@@ -72,12 +65,13 @@ let transitions: [StateTransition<WatchState, WatchEvent>] = [
     },
     
     /** 
-     Comment out for Liveness property failure, add WatchState.finished to acceptingStates to accept sink state 
+     Comment out for Liveness property failure, add WatchState.finished to acceptingStates to accept sink state
      */
-//    StateTransition(fromState: .finished, event: .reset, toState: .waiting) {
-//        print("Watch Wait 2")
-//    },
+    StateTransition(fromState: .finished, event: .reset, toState: .waiting) {
+        print("Watch Wait 2")
+    },
  
+
     
     /** 
      Uncomment for Deterministic property failure
@@ -89,7 +83,7 @@ let transitions: [StateTransition<WatchState, WatchEvent>] = [
 
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-let fsm = try Espresso.Machine(initialState: .inactive, transitions: transitions, acceptingStates:[.finished])
+let fsm = try Espresso.Machine(initialState: .inactive, transitions: transitions, acceptingStates:[.waiting])
 
 
 Espresso.postEvent(WatchEvent.active)
