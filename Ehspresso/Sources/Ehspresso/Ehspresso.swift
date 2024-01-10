@@ -53,7 +53,7 @@ public struct StateTransition<S: State, E: Event>: Equatable {
 public enum MachineValidationError: Error {
     case reachability
     case liveness
-    case determinisic
+    case deterministic
 }
 
 final public class Machine<S: State, E: Event> {
@@ -130,7 +130,7 @@ final public class Machine<S: State, E: Event> {
             let t = transitions.filter({$0 == transition})
             if t.count > 1 {
                 debugPrint("Non-unique transition: \(transition)")
-                throw MachineValidationError.determinisic
+                throw MachineValidationError.deterministic
             }
         }
     }
@@ -147,4 +147,4 @@ public func postEvent<E: Event>(_ event: E) {
 ///
 /// produces a tuple `(x + y, "x + y")`.
 @freestanding(expression)
-public macro stringify<T>(_ value: T) -> (T, String) = #externalMacro(module: "ehspressoMacros", type: "StringifyMacro")
+public macro stringify<T>(_ value: T) -> (T, String) = #externalMacro(module: "EhspressoMacros", type: "StringifyMacro")
