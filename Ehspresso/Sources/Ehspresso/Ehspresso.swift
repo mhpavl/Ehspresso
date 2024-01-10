@@ -139,3 +139,12 @@ final public class Machine<S: State, E: Event> {
 public func postEvent<E: Event>(_ event: E) {
     NotificationCenter.default.post(name: event.notificationName, object: nil)
 }
+
+/// A macro that produces both a value and a string containing the
+/// source code that generated the value. For example,
+///
+///     #stringify(x + y)
+///
+/// produces a tuple `(x + y, "x + y")`.
+@freestanding(expression)
+public macro stringify<T>(_ value: T) -> (T, String) = #externalMacro(module: "ehspressoMacros", type: "StringifyMacro")
