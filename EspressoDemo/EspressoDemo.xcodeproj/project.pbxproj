@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,14 +14,13 @@
 		4D63427F1AED57FE0073DE53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D63427E1AED57FE0073DE53 /* Images.xcassets */; };
 		4D6342821AED57FE0073DE53 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D6342801AED57FE0073DE53 /* LaunchScreen.xib */; };
 		4D63428E1AED57FE0073DE53 /* EspressoDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D63428D1AED57FE0073DE53 /* EspressoDemoTests.swift */; };
-		4D6342B51AED594C0073DE53 /* Espresso.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6342AE1AED58CA0073DE53 /* Espresso.framework */; };
-		4D6342B61AED594C0073DE53 /* Espresso.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D6342AE1AED58CA0073DE53 /* Espresso.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4D6342C31AEDEF320073DE53 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6342C21AEDEF320073DE53 /* InterfaceController.swift */; };
 		4D6342C51AEDEF320073DE53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D6342C41AEDEF320073DE53 /* Images.xcassets */; };
 		4D6342D11AEDEF320073DE53 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D6342CF1AEDEF320073DE53 /* Interface.storyboard */; };
 		4D6342D31AEDEF320073DE53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D6342D21AEDEF320073DE53 /* Images.xcassets */; };
 		4DD0C5871B41D7A9001A9985 /* EspressoDemo WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4D6342BE1AEDEF320073DE53 /* EspressoDemo WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4DD0C58A1B41D7A9001A9985 /* EspressoDemo WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 4D6342C81AEDEF320073DE53 /* EspressoDemo WatchKit App.app */; };
+		86E5EF052B4E86E300AA6FB6 /* Ehspresso in Frameworks */ = {isa = PBXBuildFile; productRef = 86E5EF042B4E86E300AA6FB6 /* Ehspresso */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,13 +66,6 @@
 			remoteGlobalIDString = 4D6342531AEC33A00073DE53;
 			remoteInfo = "Espresso OS X Tests";
 		};
-		4D6342B71AED594C0073DE53 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4D6342A61AED58CA0073DE53 /* Espresso.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4D6342271AEC32E40073DE53;
-			remoteInfo = "Espresso iOS";
-		};
 		4DD0C5851B41D7A9001A9985 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4D6342681AED57FE0073DE53 /* Project object */;
@@ -97,7 +89,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4D6342B61AED594C0073DE53 /* Espresso.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,7 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D6342B51AED594C0073DE53 /* Espresso.framework in Frameworks */,
+				86E5EF052B4E86E300AA6FB6 /* Ehspresso in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,10 +292,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				4D6342B81AED594C0073DE53 /* PBXTargetDependency */,
 				4DD0C5891B41D7A9001A9985 /* PBXTargetDependency */,
 			);
 			name = EspressoDemo;
+			packageProductDependencies = (
+				86E5EF042B4E86E300AA6FB6 /* Ehspresso */,
+			);
 			productName = EspressoDemo;
 			productReference = 4D6342701AED57FE0073DE53 /* EspressoDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -401,6 +394,9 @@
 				Base,
 			);
 			mainGroup = 4D6342671AED57FE0073DE53;
+			packageReferences = (
+				86E5EF032B4E86E300AA6FB6 /* XCLocalSwiftPackageReference "../Ehspresso" */,
+			);
 			productRefGroup = 4D6342711AED57FE0073DE53 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -528,11 +524,6 @@
 			isa = PBXTargetDependency;
 			target = 4D63426F1AED57FE0073DE53 /* EspressoDemo */;
 			targetProxy = 4D6342881AED57FE0073DE53 /* PBXContainerItemProxy */;
-		};
-		4D6342B81AED594C0073DE53 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Espresso iOS";
-			targetProxy = 4D6342B71AED594C0073DE53 /* PBXContainerItemProxy */;
 		};
 		4DD0C5861B41D7A9001A9985 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -690,7 +681,10 @@
 				DEVELOPMENT_TEAM = Y8R88XC2P4;
 				INFOPLIST_FILE = EspressoDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.groksoftware.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -703,10 +697,14 @@
 				DEVELOPMENT_TEAM = Y8R88XC2P4;
 				INFOPLIST_FILE = EspressoDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.groksoftware.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
@@ -725,7 +723,11 @@
 				);
 				INFOPLIST_FILE = EspressoDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.groksoftware.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EspressoDemo.app/EspressoDemo";
@@ -743,10 +745,15 @@
 				);
 				INFOPLIST_FILE = EspressoDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.groksoftware.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EspressoDemo.app/EspressoDemo";
 			};
 			name = Release;
@@ -795,7 +802,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "EspressoDemo WatchKit Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.groksoftware.EspressoDemo.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -809,12 +820,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = "EspressoDemo WatchKit Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.groksoftware.EspressoDemo.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
@@ -869,6 +885,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		86E5EF032B4E86E300AA6FB6 /* XCLocalSwiftPackageReference "../Ehspresso" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../Ehspresso;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		86E5EF042B4E86E300AA6FB6 /* Ehspresso */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ehspresso;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4D6342681AED57FE0073DE53 /* Project object */;
 }

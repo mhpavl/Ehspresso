@@ -7,15 +7,18 @@
 //
 
 import UIKit
-import Espresso
+import Ehspresso
 
 class FirstViewController: UIViewController {
+
+    var machine: Machine<WatchState, WatchEvent>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let _ = try! Espresso.Machine(initialState: .inactive, transitions: transitions, acceptingStates:[])
+        machine = try? Ehspresso.Machine(initialState: .inactive, transitions: transitions, acceptingStates:[])
+        print("\(machine.debugDescription)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,16 +30,16 @@ class FirstViewController: UIViewController {
         super.viewDidAppear(animated)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            Espresso.postEvent(WatchEvent.active)
+            Ehspresso.postEvent(WatchEvent.active)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
-            Espresso.postEvent(WatchEvent.wait)
+            Ehspresso.postEvent(WatchEvent.wait)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4)) {
-            Espresso.postEvent(WatchEvent.start)
+            Ehspresso.postEvent(WatchEvent.start)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(8)) {
-            Espresso.postEvent(WatchEvent.finish)
+            Ehspresso.postEvent(WatchEvent.finish)
         }
     }
     
@@ -49,7 +52,7 @@ class FirstViewController: UIViewController {
         },
         StateTransition(fromState: .waiting, event: .start, toState: .doing) {
             print("Watch Do")
-            Espresso.postEvent(WatchEvent.showDoing)
+            Ehspresso.postEvent(WatchEvent.showDoing)
         },
         
         StateTransition(fromState: .doing, event: .showDoing, toState: .doing) {
