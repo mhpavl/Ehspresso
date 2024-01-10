@@ -44,7 +44,7 @@ public struct StateTransition<S: State, E: Event>: Equatable {
         self.action = action
     }
     
-    static public func ==<S, T>(lhs: StateTransition<S, T>, rhs: StateTransition<S, T>) -> Bool {
+    static public func ==(lhs: StateTransition<S, E>, rhs: StateTransition<S, E>) -> Bool {
         return (lhs.fromState == rhs.fromState && lhs.event == rhs.event && lhs.toState == rhs.toState)
     }
 }
