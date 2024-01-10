@@ -1,7 +1,7 @@
 //: Playground - noun: a place where people can play
 
 import UIKit
-import Espresso
+import Ehspresso
 
 import PlaygroundSupport
 
@@ -50,7 +50,7 @@ let transitions: [StateTransition<WatchState, WatchEvent>] = [
     },
     StateTransition(fromState: .waiting, event: .start, toState: .doing) {
         print("Watch Do")
-        Espresso.postEvent(WatchEvent.showDoing)
+        Ehspresso.postEvent(WatchEvent.showDoing)
     },
     
     StateTransition(fromState: .doing, event: .showDoing, toState: .doing) {
@@ -83,12 +83,12 @@ let transitions: [StateTransition<WatchState, WatchEvent>] = [
 
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-let fsm = try Espresso.Machine(initialState: .inactive, transitions: transitions, acceptingStates:[.waiting])
+let fsm = try Ehspresso.Machine(initialState: .inactive, transitions: transitions, acceptingStates:[.waiting])
 
 
-Espresso.postEvent(WatchEvent.active)
-Espresso.postEvent(WatchEvent.wait)
-Espresso.postEvent(WatchEvent.start)
-Espresso.postEvent(WatchEvent.finish)
+Ehspresso.postEvent(WatchEvent.active)
+Ehspresso.postEvent(WatchEvent.wait)
+Ehspresso.postEvent(WatchEvent.start)
+Ehspresso.postEvent(WatchEvent.finish)
 
 

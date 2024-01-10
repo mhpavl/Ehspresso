@@ -11,9 +11,6 @@
       location = "group:Espresso.playground">
    </FileRef>
    <FileRef
-      location = "group:Espresso/Espresso.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:EspressoDemo/EspressoDemo.xcodeproj">
    </FileRef>
 </Workspace>
